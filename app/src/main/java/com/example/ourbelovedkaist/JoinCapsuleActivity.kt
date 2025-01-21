@@ -1,10 +1,10 @@
 package com.example.ourbelovedkaist
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -12,11 +12,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 
 class JoinCapsuleActivity : AppCompatActivity() {
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
     private lateinit var videoPickerLauncher: ActivityResultLauncher<Intent>
+
+    private lateinit var selectedDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,14 +45,7 @@ class JoinCapsuleActivity : AppCompatActivity() {
         }
 
         packButton.setOnClickListener {
-            // Send data to back-end database (API Implementation)
-            // ...
-
-            Toast.makeText(this, "타임캡슐이 포장되었습니다.", Toast.LENGTH_LONG).show()
-
-            Thread.sleep(1000)
-
-            finish()
+            showDatePickerDialog()
         }
     }
 
@@ -128,5 +124,46 @@ class JoinCapsuleActivity : AppCompatActivity() {
         } else {
             videoPickerLauncher.launch(intent)
         }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                showConfirmDialog()
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+
+    private fun showConfirmDialog() {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("포장하기")
+            .setMessage("개봉할 날짜: $selectedDate\n\n타임캡슐을 포장하시겠습니까?")
+            .setPositiveButton("포장하기") { _, _ ->
+                navigateToPlaceCapsuleActivity()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    private fun navigateToPlaceCapsuleActivity() {
+        val intent = Intent(this, PlaceCapsuleActivity::class.java)
+        intent.putExtra("selected_date", selectedDate)
+        startActivity(intent)
+        finish()
     }
 }
