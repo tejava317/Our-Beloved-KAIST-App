@@ -1,14 +1,23 @@
 package com.example.ourbelovedkaist
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 
 class JoinCapsuleActivity : AppCompatActivity() {
+
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
+    private lateinit var videoPickerLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_capsule)
@@ -18,16 +27,18 @@ class JoinCapsuleActivity : AppCompatActivity() {
         val addVideoButton = findViewById<Button>(R.id.add_video_button)
         val packButton = findViewById<Button>(R.id.pack_button)
 
+        initActivityResultLaunchers()
+
         addTextButton.setOnClickListener {
             showTextInputDialog()
         }
 
         addImageButton.setOnClickListener {
-
+            showGalleryDialog(isImage = true)
         }
 
         addVideoButton.setOnClickListener {
-
+            showGalleryDialog(isImage = false)
         }
 
         packButton.setOnClickListener {
@@ -39,6 +50,32 @@ class JoinCapsuleActivity : AppCompatActivity() {
             Thread.sleep(1000)
 
             finish()
+        }
+    }
+
+    private fun initActivityResultLaunchers() {
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val selectedImageUri: Uri? = result.data?.data
+                if (selectedImageUri != null) {
+                    Toast.makeText(this, "이미지가 선택되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    // Send data to back-end database (API Implementation)
+                    // ...
+                }
+            }
+        }
+
+        videoPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val selectedVideoUri: Uri? = result.data?.data
+                if (selectedVideoUri != null) {
+                    Toast.makeText(this, "동영상이 선택되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    // Send data to back-end database (API Implementation)
+                    // ...
+                }
+            }
         }
     }
 
@@ -66,5 +103,30 @@ class JoinCapsuleActivity : AppCompatActivity() {
             .create()
 
         dialog.show()
+    }
+
+    private fun showGalleryDialog(isImage: Boolean) {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(if (isImage) "사진 추가" else "동영상 추가")
+            .setMessage("갤러리에서 선택해주세요.")
+            .setPositiveButton("갤러리에서 선택") { _, _ ->
+                openGallery(isImage)
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    private fun openGallery(isImage: Boolean) {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = if (isImage) "image/*" else "video/*"
+        if (isImage) {
+            imagePickerLauncher.launch(intent)
+        } else {
+            videoPickerLauncher.launch(intent)
+        }
     }
 }
