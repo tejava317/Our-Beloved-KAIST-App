@@ -23,9 +23,11 @@ class CreateCapsuleActivity : AppCompatActivity() {
             if (capsuleName.isEmpty() || creatorName.isEmpty()) {
                 Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
+                // Send data to back-end database (API Implementation)
+                // ...
+
                 Toast.makeText(this, "타임캡슐이 생성되었습니다.", Toast.LENGTH_LONG).show()
 
-                // Send data to back-end (API)
                 Thread.sleep(1000)
 
                 val intent = Intent(this, MainActivity::class.java)
