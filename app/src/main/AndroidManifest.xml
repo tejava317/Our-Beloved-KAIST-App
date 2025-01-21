@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OurBelovedKAIST"
         tools:targetApi="31">
+        <activity android:name=".CreateCapsuleActivity" />
+        <activity android:name=".JoinCapsuleActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
