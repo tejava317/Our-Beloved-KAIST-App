@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="타임캡슐 생성"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        android:gravity="start"
+        android:paddingStart="8dp" />
+
+    <EditText
+        android:id="@+id/et_capsule_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="타임캡슐 이름"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:color/white"
+        android:elevation="2dp" />
+
+    <EditText
+        android:id="@+id/et_creator_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="생성한 사람의 이름"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        android:elevation="2dp" />
+
+    <Button
+        android:id="@+id/create_capsule_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="만들기"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/purple_500"
+        android:padding="12dp"
+        android:textStyle="bold" />
+
+</LinearLayout>
