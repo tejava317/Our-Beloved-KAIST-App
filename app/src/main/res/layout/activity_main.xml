@@ -6,23 +6,23 @@
     android:gravity="center">
 
     <Button
-        android:id="@+id/create_capsule_button"
+        android:id="@+id/create_capsule_activity_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="타임캡슐 생성하기"
         android:layout_marginBottom="12dp" />
 
     <Button
-        android:id="@+id/join_capsule_button"
+        android:id="@+id/join_capsule_activity_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="타임캡슐 참여하기"
         android:layout_marginBottom="12dp" />
 
     <Button
-        android:id="@+id/open_capsule_button"
+        android:id="@+id/open_capsule_activity_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="타임캡슐 열기" />
+        android:text="타임캡슐 열러가기" />
 
 </LinearLayout>

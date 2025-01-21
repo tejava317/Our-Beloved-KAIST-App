@@ -10,9 +10,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button1 = findViewById<Button>(R.id.create_capsule_button)
-        val button2 = findViewById<Button>(R.id.join_capsule_button)
-        val button3 = findViewById<Button>(R.id.open_capsule_button)
+        val button1 = findViewById<Button>(R.id.create_capsule_activity_button)
+        val button2 = findViewById<Button>(R.id.join_capsule_activity_button)
+        val button3 = findViewById<Button>(R.id.open_capsule_activity_button)
 
         button1.setOnClickListener {
             val intent = Intent(this, CreateCapsuleActivity::class.java)
