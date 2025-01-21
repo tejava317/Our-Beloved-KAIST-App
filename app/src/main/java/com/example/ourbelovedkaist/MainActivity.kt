@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val button1 = findViewById<Button>(R.id.create_capsule_button)
         val button2 = findViewById<Button>(R.id.join_capsule_button)
+        val button3 = findViewById<Button>(R.id.open_capsule_button)
 
         button1.setOnClickListener {
             val intent = Intent(this, CreateCapsuleActivity::class.java)
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         button2.setOnClickListener {
             val intent = Intent(this, JoinCapsuleActivity::class.java)
+            startActivity(intent)
+        }
+
+        button3.setOnClickListener {
+            val intent = Intent(this, OpenCapsuleActivity::class.java)
             startActivity(intent)
         }
     }
