@@ -55,6 +55,12 @@ android {
         }
     }
 
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
+    }
+
 
 }
 
@@ -80,4 +86,9 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.kakao.maps.open:android:2.5.0")
+    implementation ("com.google.firebase:firebase-bom:32.7.1")
+    implementation ("com.google.firebase:firebase-firestore-ktx")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("com.kakao.maps.open:android:2.5.0")
 }
