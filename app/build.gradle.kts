@@ -28,8 +28,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -37,6 +37,25 @@ android {
     buildFeatures {
         compose = true
     }
+
+
+    packaging {
+        resources {
+            resources.excludes.add("META-INF/INDEX.LIST")
+            resources.excludes.add("META-INF/DEPENDENCIES")
+            resources.excludes.add("META-INF/LICENSE")
+            resources.excludes.add("META-INF/LICENSE.txt")
+            resources.excludes.add("META-INF/license.txt")
+            resources.excludes.add("META-INF/NOTICE")
+            resources.excludes.add("META-INF/NOTICE.txt")
+            resources.excludes.add("META-INF/notice.txt")
+            resources.excludes.add("META-INF/*.kotlin_module")
+            resources.excludes.add("META-INF/AL2.0")
+            resources.excludes.add("META-INF/LGPL2.1")
+        }
+    }
+
+
 }
 
 dependencies {
@@ -50,6 +69,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
+    implementation(libs.firebase.appdistribution.gradle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,4 +77,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
