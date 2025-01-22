@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Our Beloved KAIST"
 include(":app")
+include(":unityLibrary")
