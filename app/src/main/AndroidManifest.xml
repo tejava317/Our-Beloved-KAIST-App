@@ -29,6 +29,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MapsActivity" />
+        <activity android:name=".MapsViewActivity" />
         <activity android:name=".CreateCapsuleActivity" />
         <activity android:name=".JoinCapsuleActivity" />
         <activity android:name=".OpenCapsuleActivity" />
