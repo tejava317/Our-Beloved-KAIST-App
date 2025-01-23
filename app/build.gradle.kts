@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.ourbelovedkaist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.ourbelovedkaist"
@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.firebase.appdistribution.gradle)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,4 +72,7 @@ dependencies {
     // RESTful API - Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
 }
