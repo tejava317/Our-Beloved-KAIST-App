@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.google.android.gms.maps.CameraUpdateFactory
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -102,13 +104,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val location = currentLocation!!
             timeCapsuleLocations.add(location)
 
+            // 이미지 크기 조절
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_time_capsule)
+            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
+            val timeCapsuleIcon = BitmapDescriptorFactory.fromBitmap(scaledBitmap)
+
             googleMap.addMarker(
                 MarkerOptions()
                     .position(location)
                     .title("Time Capsule")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                    .icon(timeCapsuleIcon)
             )
-            Toast.makeText(this, "Time capsule placed at: $location", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Current location is not available", Toast.LENGTH_SHORT).show()
         }
