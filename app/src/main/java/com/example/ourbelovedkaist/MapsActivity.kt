@@ -1,6 +1,7 @@
 package com.example.ourbelovedkaist
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
@@ -70,6 +71,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     )
                 }
             }
+        }
+
+        // 마커 클릭 리스너 추가
+        googleMap.setOnMarkerClickListener { marker ->
+            val intent = Intent(this, ShowMemoryActivity::class.java)
+            startActivity(intent)
+            true // 이벤트 소비
         }
     }
 
