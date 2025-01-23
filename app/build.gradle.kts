@@ -32,34 +32,30 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
     }
 
-
     packaging {
         resources {
-            resources.excludes.add("META-INF/INDEX.LIST")
-            resources.excludes.add("META-INF/DEPENDENCIES")
-            resources.excludes.add("META-INF/LICENSE")
-            resources.excludes.add("META-INF/LICENSE.txt")
-            resources.excludes.add("META-INF/license.txt")
-            resources.excludes.add("META-INF/NOTICE")
-            resources.excludes.add("META-INF/NOTICE.txt")
-            resources.excludes.add("META-INF/notice.txt")
-            resources.excludes.add("META-INF/*.kotlin_module")
-            resources.excludes.add("META-INF/AL2.0")
-            resources.excludes.add("META-INF/LGPL2.1")
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/notice.txt"
+            excludes += "META-INF/*.kotlin_module"
+            excludes += "META-INF/AL2.0"
+            excludes += "META-INF/LGPL2.1"
         }
     }
-
-
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -69,7 +65,18 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
-    implementation(libs.firebase.appdistribution.gradle)
+
+    // Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+
+    // Retrofit for networking
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Google Maps & Location
+    implementation("com.google.android.gms:play-services-maps:18.0.2")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -77,7 +84,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
