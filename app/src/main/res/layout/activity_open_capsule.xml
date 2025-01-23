@@ -8,13 +8,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
         android:text="타임캡슐 열기"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
+        android:textAppearance="@style/ContentTitleStyle"
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:gravity="start"
-        android:paddingStart="8dp" />
+        android:paddingStart="8dp"
+        android:text="보관된 타임캡슐을 열어 추억을 확인해보세요."
+        android:textAppearance="@style/ContentDescriptionStyle" />
 
     <TextureView
         android:id="@+id/open_capsule_camera"
