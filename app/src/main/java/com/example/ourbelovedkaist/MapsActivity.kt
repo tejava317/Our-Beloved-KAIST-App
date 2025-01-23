@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+import com.google.android.gms.maps.CameraUpdateFactory
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
@@ -47,6 +49,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
+
+        // 현재 위치 권한 확인
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // 현재 위치 버튼 활성화
+            googleMap.isMyLocationEnabled = true
+
+            // 현재 위치 가져와서 카메라 이동
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    googleMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(latLng, 15f)
+                    )
+                }
+            }
+        }
     }
 
     private fun getCurrentLocation() {
