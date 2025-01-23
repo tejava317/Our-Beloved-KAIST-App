@@ -14,4 +14,32 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <!-- Text style -->
+    <style name="ContentTitleStyle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
+    </style>
+
+    <style name="ContentDescriptionStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:fontFamily">@font/notosans_semibold</item>
+    </style>
+
+    <style name="ButtonDescriptionStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
+    </style>
+
+    <style name="BlackStatusBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 상태바(메뉴바) 배경색 검정 -->
+        <item name="android:statusBarColor">#000000</item>
+        <!-- 상태바 아이콘과 텍스트 색상 -->
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
 </resources>

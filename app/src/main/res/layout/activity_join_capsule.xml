@@ -8,13 +8,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
         android:text="타임캡슐 참여"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
+        android:textAppearance="@style/ContentTitleStyle"
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:gravity="start"
-        android:paddingStart="8dp" />
+        android:paddingStart="8dp"
+        android:text="보관하고 싶은 추억을 유리병에 넣어주세요."
+        android:textAppearance="@style/ContentDescriptionStyle" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -22,59 +30,125 @@
         android:layout_weight="1"
         android:src="@drawable/glass_bottle_remove_bg"
         android:contentDescription="Glass Jar"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="4dp" />
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:paddingBottom="16dp">
+        android:padding="8dp"
+        android:background="@drawable/rounded_background"
+        android:elevation="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="12dp" >
 
-        <Button
-            android:id="@+id/add_text_button"
+        <LinearLayout
+            android:id="@+id/text_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="글"
-            android:padding="12dp"
-            android:backgroundTint="@android:color/white"
-            android:elevation="4dp"
-            android:layout_marginEnd="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="6dp"
+            android:background="?attr/selectableItemBackground">
 
-        <Button
-            android:id="@+id/add_image_button"
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_text"
+                android:contentDescription="Text Icon"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="글"
+                android:textSize="14sp"
+                android:fontFamily="@font/notosans_bold"
+                android:textColor="#000000"
+                android:includeFontPadding="false" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:id="@+id/image_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="사진"
-            android:padding="12dp"
-            android:backgroundTint="@android:color/white"
-            android:elevation="4dp"
-            android:layout_marginEnd="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="6dp"
+            android:background="?attr/selectableItemBackground">
 
-        <Button
-            android:id="@+id/add_video_button"
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_image"
+                android:contentDescription="Image Icon"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진"
+                android:textSize="14sp"
+                android:fontFamily="@font/notosans_bold"
+                android:textColor="#000000"
+                android:includeFontPadding="false" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:id="@+id/video_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="동영상"
-            android:padding="12dp"
-            android:backgroundTint="@android:color/white"
-            android:elevation="4dp"
-            android:layout_marginEnd="8dp" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="6dp"
+            android:background="?attr/selectableItemBackground">
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_video"
+                android:contentDescription="Video Icon"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영상"
+                android:textSize="14sp"
+                android:fontFamily="@font/notosans_bold"
+                android:textColor="#000000"
+                android:includeFontPadding="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/pack_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="포장하기 →"
+        android:text="포장하기  →"
         android:padding="16dp"
-        android:backgroundTint="@color/purple_200"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:layout_gravity="end" />
+        android:backgroundTint="@color/light_pink"
+        android:textAppearance="@style/ButtonDescriptionStyle"
+        android:layout_gravity="end"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:layout_marginEnd="2dp"
+        android:includeFontPadding="false" />
 
 </LinearLayout>

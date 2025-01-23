@@ -14,7 +14,6 @@ class MemoryCircleAdapter(
 
     class MemoryCircleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val circleView: View = itemView.findViewById(R.id.circle_view)
-        val memoryText: TextView = itemView.findViewById(R.id.memory_text)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoryCircleViewHolder {
@@ -25,7 +24,6 @@ class MemoryCircleAdapter(
 
     override fun onBindViewHolder(holder: MemoryCircleViewHolder, position: Int) {
         val memory = memories[position]
-        holder.memoryText.text = memory.type // 메모리 타입 또는 표시하고 싶은 텍스트
         holder.circleView.setOnClickListener {
             onItemClick(memory)
         }

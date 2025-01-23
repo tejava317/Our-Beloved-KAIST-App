@@ -25,7 +25,8 @@
         <activity android:name=".JoinCapsuleActivity" />
         <activity android:name=".OpenCapsuleActivity" />
         <activity android:name=".PlaceCapsuleActivity" />
-        <activity android:name=".ShowMemoryActivity" />
+        <activity android:name=".ShowMemoryActivity"
+            android:theme="@style/BlackStatusBarTheme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
