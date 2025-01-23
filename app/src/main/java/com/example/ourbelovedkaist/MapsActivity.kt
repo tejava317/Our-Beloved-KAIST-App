@@ -1,160 +1,143 @@
-package com.example.timecapsule
+package com.example.ourbelovedkaist
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+
 import com.example.ourbelovedkaist.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.android.gms.maps.model.MarkerOptions
+
+import com.google.android.gms.maps.CameraUpdateFactory
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var currentLocation: LatLng? = null
+    private val timeCapsuleLocations = mutableListOf<LatLng>()
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-        // Google Map 초기화
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        // 지도 준비
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // FusedLocationProviderClient 초기화
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        // FusedLocationProvider 초기화
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // "현재 위치 저장" 버튼 클릭 리스너
+        // 버튼 클릭 시 현재 위치 저장
         findViewById<Button>(R.id.save_location_button).setOnClickListener {
             saveCurrentLocation()
         }
+
+        // 현재 위치 가져오기
+        getCurrentLocation()
     }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        googleMap.uiSettings.isZoomControlsEnabled = true
 
-        // 위치 권한 확인 및 활성화
+        // 현재 위치 권한 확인
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+            // 현재 위치 버튼 활성화
             googleMap.isMyLocationEnabled = true
-            showCurrentLocation()
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST
-            )
+
+            // 현재 위치 가져와서 카메라 이동
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    googleMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(latLng, 15f)
+                    )
+                }
+            }
+        }
+
+        // 마커 클릭 리스너 추가
+        googleMap.setOnMarkerClickListener { marker ->
+            val intent = Intent(this, ShowMemoryActivity::class.java)
+            startActivity(intent)
+            true // 이벤트 소비
         }
     }
 
-    // 현재 위치 표시
-    private fun showCurrentLocation() {
+    private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST
+                1001
             )
             return
         }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            location?.let {
-                val currentLatLng = LatLng(it.latitude, it.longitude)
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-            } ?: run {
-                Toast.makeText(this, "현재 위치를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                currentLocation = LatLng(location.latitude, location.longitude)
+                Toast.makeText(this, "Location: $currentLocation", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Unable to get current location", Toast.LENGTH_SHORT).show()
             }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to get current location", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun saveCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST
+        if (currentLocation != null) {
+            val location = currentLocation!!
+            timeCapsuleLocations.add(location)
+
+            // 이미지 크기 조절
+            val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_time_capsule)
+            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false)
+            val timeCapsuleIcon = BitmapDescriptorFactory.fromBitmap(scaledBitmap)
+
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(location)
+                    .title("Time Capsule")
+                    .icon(timeCapsuleIcon)
             )
-            return
-        }
-
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            location?.let {
-                val currentLatLng = LatLng(it.latitude, it.longitude)
-                val database = Firebase.database.reference
-                val capsuleId = "capsule_${System.currentTimeMillis()}"
-
-                database.child("capsules").child(capsuleId).setValue(
-                    mapOf(
-                        "latitude" to currentLatLng.latitude,
-                        "longitude" to currentLatLng.longitude
-                    )
-                ).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(this, "위치가 저장되었습니다!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "위치 저장 실패: ${it.exception?.message}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } ?: run {
-                Toast.makeText(this, "위치를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show()
-            }
+        } else {
+            Toast.makeText(this, "Current location is not available", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // 권한 요청 결과 처리
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION_REQUEST) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    googleMap.isMyLocationEnabled = true
-                    showCurrentLocation()
-                }
-            } else {
-                Toast.makeText(this, "위치 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
-            }
+        if (requestCode == 1001 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getCurrentLocation()
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST = 1
     }
 }

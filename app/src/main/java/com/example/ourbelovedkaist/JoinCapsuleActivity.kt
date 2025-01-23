@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ourbelovedkaist.data.model.MemoryRequest
 import com.example.ourbelovedkaist.data.model.MemoryResponse
 import com.example.ourbelovedkaist.data.network.RetrofitClient
+
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -169,7 +170,7 @@ class JoinCapsuleActivity : AppCompatActivity() {
     }
 
     private fun navigateToPlaceCapsuleActivity() {
-        val intent = Intent(this, PlaceCapsuleActivity::class.java)
+        val intent = Intent(this, MapsActivity::class.java)
         intent.putExtra("selected_date", selectedDate)
         startActivity(intent)
         finish()
