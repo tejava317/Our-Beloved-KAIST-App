@@ -35,8 +35,7 @@ class MapsViewActivity : AppCompatActivity(), OnMapReadyCallback {
         // TODO: DB에서 저장된 위치들을 불러오는 로직 구현
         // 임시로 하드코딩된 위치 반환
         return listOf(
-            LatLng(36.374, 127.365),  // KAIST 위치
-            LatLng(36.375, 127.366)
+            LatLng(36.374, 127.365)  // KAIST 위치
         )
     }
 
