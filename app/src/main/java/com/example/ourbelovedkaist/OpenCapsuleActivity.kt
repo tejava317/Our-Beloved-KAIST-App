@@ -28,6 +28,7 @@ class OpenCapsuleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_open_capsule)
 
         textureView = findViewById(R.id.open_capsule_camera)
+        val openCapsuleButton = findViewById<Button>(R.id.open_capsule_button)
 
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
 
@@ -36,6 +37,19 @@ class OpenCapsuleActivity : AppCompatActivity() {
             setupTextureView()
         } else {
             requestCameraPermission()
+        }
+
+        openCapsuleButton.setOnClickListener {
+            // Send data to back-end database (API Implementation)
+            // ...
+
+            Toast.makeText(this, "타임캡슐이 열렸습니다!", Toast.LENGTH_SHORT).show()
+            Thread.sleep(1000)
+
+            val intent = Intent(this, ShowMemoryActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
         }
     }
 
