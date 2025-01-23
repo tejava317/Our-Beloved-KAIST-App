@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.ourbelovedkaist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.ourbelovedkaist"
@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
+    implementation(libs.firebase.appdistribution.gradle)
+
 
     // Firebase Realtime Database
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
@@ -84,4 +86,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // RESTful API - Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
 }
