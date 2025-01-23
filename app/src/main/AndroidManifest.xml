@@ -28,7 +28,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.example.timecapsule.MapsActivity" />
+        <activity android:name=".MapsActivity" />
         <activity android:name=".CreateCapsuleActivity" />
         <activity android:name=".JoinCapsuleActivity" />
         <activity android:name=".OpenCapsuleActivity" />

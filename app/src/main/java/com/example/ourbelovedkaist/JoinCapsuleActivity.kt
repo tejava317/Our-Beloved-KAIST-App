@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ourbelovedkaist.data.model.MemoryRequest
 import com.example.ourbelovedkaist.data.model.MemoryResponse
 import com.example.ourbelovedkaist.data.network.RetrofitClient
-import com.example.timecapsule.MapsActivity
+
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
