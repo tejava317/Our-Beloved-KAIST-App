@@ -12,6 +12,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ourbelovedkaist.data.model.MemoryRequest
+import com.example.ourbelovedkaist.data.model.MemoryResponse
+import com.example.ourbelovedkaist.data.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 class JoinCapsuleActivity : AppCompatActivity() {
@@ -20,6 +25,8 @@ class JoinCapsuleActivity : AppCompatActivity() {
     private lateinit var videoPickerLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var selectedDate: String
+
+    private val capsuleId = "2127aebb-9284-40db-a2c3-464786e81ccf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,8 +92,7 @@ class JoinCapsuleActivity : AppCompatActivity() {
             .setPositiveButton("확인") { _, _ ->
                 val inputText = editText.text.toString().trim()
                 if (inputText.isNotEmpty()) {
-                    // Send data to back-end database (API Implementation)
-                    // ...
+                    createMemory(capsuleId, inputText)
 
                     Toast.makeText(this, "텍스트가 추가되었습니다.", Toast.LENGTH_SHORT).show()
                 } else {
@@ -165,5 +171,25 @@ class JoinCapsuleActivity : AppCompatActivity() {
         intent.putExtra("selected_date", selectedDate)
         startActivity(intent)
         finish()
+    }
+
+    private fun createMemory(capsuleId: String, content: String) {
+        val memoryRequest = MemoryRequest(type = "TEXT", content = content, capsuleId = capsuleId)
+
+        RetrofitClient.apiService.createMemory(capsuleId, memoryRequest)
+            .enqueue(object : retrofit2.Callback<MemoryResponse> {
+                override fun onResponse(call: Call<MemoryResponse>, response: Response<MemoryResponse>) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        Toast.makeText(this@JoinCapsuleActivity, "메모리 생성 성공: ${responseBody?.id}", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@JoinCapsuleActivity, "생성 실패: ${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<MemoryResponse>, t: Throwable) {
+                    Toast.makeText(this@JoinCapsuleActivity, "네트워크 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }
