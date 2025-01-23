@@ -2,6 +2,7 @@ package com.example.ourbelovedkaist
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -48,6 +49,7 @@ class CreateCapsuleActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<CapsuleResponse>, t: Throwable) {
+                Log.e("CreateCapsuleActivity", "네트워크 오류", t)
                 Toast.makeText(this@CreateCapsuleActivity, "네트워크 오류: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
