@@ -35,6 +35,11 @@
         <item name="android:fontFamily">@font/notosans_bold</item>
     </style>
 
-
+    <style name="BlackStatusBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 상태바(메뉴바) 배경색 검정 -->
+        <item name="android:statusBarColor">#000000</item>
+        <!-- 상태바 아이콘과 텍스트 색상 -->
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
 </resources>

@@ -4,20 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#000000">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
         android:text="추억 확인하기"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
+        android:textAppearance="@style/ContentTitleStyle"
+        android:includeFontPadding="false"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="start"
+        android:paddingStart="8dp"
+        android:text="구슬을 하나씩 열어 추억을 확인해보세요."
+        android:textAppearance="@style/ContentDescriptionStyle"
+        android:textColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_memories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 </LinearLayout>
